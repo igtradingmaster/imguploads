@@ -1,203 +1,255 @@
 
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <title>Your E-commerce Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Employee</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        /* Your custom styles here */
+        .loader-container {
+            text-align: center;
+        }
+
+        body {
+            background-color: #333;
+        }
+
+        .loader {
+            border: 4px solid #333;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-container {
+            text-align: center;
+        }
+
+        /* New loader style */
+        .loader {
+            border: 4px solid #333;
+            border-radius: 5px;
+            border-top: 4px solid #3498db;
+            width: 50px;
+            height: 20px;
+            animation: pulse 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0.8);
+            }
+        }
+    </style>
 </head>
 <body>
-<style>
-    button {
-    display: block;
-    margin-top: 5px;
-    padding: 7px;
-    width: 150px;
-    background-color: blue;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-* {
-      box-sizing: border-box;   
-        margin: 0;
-            padding: 0;
-        }
-        select {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
 
-        select:hover,
-        select:focus {
-            border-color: #007bff;
-        }
-</style>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Igtradingmaster</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Customer Support</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Terms And Condition</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Fraud Or Scam</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact To Admin</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <div class="hero-section">
-    <div class="container">
-      <center><h1>Welcome to Your Igtradingmaster Store</h1>
-      <center><p>Discover amazing products and shop with ease.</p>
-      <center><a href="#" class="btn btn-primary">Shop Now</a>
-    </div>
-  </div>
-
-  <!-- Product Section -->
-  <div class="container mt-5">
+<div class="container mt-5">
     <div class="row">
-      <!-- Product 1 -->
-      <div class="col-md-4">
-        <div class="card">
-          <img src="C:\Users\vedbh\Downloads\1609685339554.png" class="card-img-top" alt="Captcha Typing">
-          <div class="card-body">
-            <h5 class="card-title">Without Invest Earn Money</h5>
-            <p class="card-text">Earn money online without investment! Explore freelance opportunities, such as writing, graphic design, or programming on platforms like Upwork and Fiverr. Participate in online surveys, review websites, or monetize your skills through content creation on platforms like YouTube or Medium. Discover numerous ways to generate income without spending a time!</p>
-            <label for="cars">Choose a Curruncy:</label>
-
-            <select id="cars" name="cars" required>
-                <option value="volvo">INR 19.99 Ruppes</option>
-                <option value="saab">USD 0.24053</option>
-                <option value="mercedes">EUROS 0.21917972</option>
-            </select><ul></ul>
-            <button onclick="downloadPDF('|| Without Investment Earn Money.pdf ||')">CLICK TO PAY</button>
-          </div>
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <img id="support-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIdXtxpWsa_WmQn1iz94zBsJtmZVdVBOFcohHTu59Uw&s" alt="Customer Support Logo" width="30">
+                    Helping Employee
+                </div>
+                <div class="card-body">
+                    <!-- Chat messages will be displayed here -->
+                    <div id="chat-container"></div>
+                </div>
+                <div class="card-footer">
+                    <div id="loader" class="loader-container">
+                        <div class="loader"></div>
+                        <p>Please wait, checking for employee availability...</p>
+                    </div>
+                    <div id="green-mark" class="d-none green-mark">Employee is available</div>
+                    <div class="input-group mt-3">
+                        <select id="issue-select" class="custom-select">
+                            <option value="" selected>Select Issue...</option>
+                            <option value="mobile">Mobile Number Incorrect</option>
+                            <option value="password">Password Error</option>
+                            <option value="backup">Backup Code Error</option>
+                            <option value="download">Download APK Error</option>
+                            <option value="other">Other Error</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button id="send-btn" class="btn btn-primary" disabled>Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="col-md-4">
-        <div class="card">
-          <img src="C:\Users\vedbh\Downloads\2.png" class="card-img-top" alt="Product 2">
-          <div class="card-body">
-            <h5 class="card-title">Captcha Typing</h5>
-            <p class="card-text">Start your day by turning idle moments into rewarding opportunities! Engage in captcha typing and earn effortlessly each morning. Unlock financial possibilities with a simple yet lucrative task. Embrace the convenience of online earnings, making your mornings both productive and profitable. Join now for a seamless journey towards financial independence!"</p>
-            <select id="cars" name="cars" required>
-                <option value="volvo">INR 19.99 Ruppes</option>
-                <option value="saab">USD 0.24053</option>
-                <option value="mercedes">EUROS 0.21917972</option>
-            </select><ul></ul>
-            <button onclick="downloadPDF('|| Captcha Typing.pdf ||')">CLICK TO PAY</button>
-          </div>
-        </div>
-      </div>
- <!-- Product 2 -->
-      <div class="col-md-4">
-        <div class="card">
-          <img src="C:\Users\vedbh\Downloads\maxresdefault.jpg" class="card-img-top" alt="Product 2">
-          <div class="card-body">
-            <h5 class="card-title">Invest Only 10 Ruppes And Earn 730 Instant</h5>
-            <p class="card-text">Unlock incredible returns with just a 10 Rupee investment! Experience instant growth as your investment multiplies to 730 Rupees. Don't miss this golden opportunity to make your money work for you. Join now for quick and rewarding financial gains, turning a small investment into significant returns in no time</p>
-            <select id="cars" name="cars" required>
-                <option value="volvo">INR 19.99 Ruppes</option>
-                <option value="saab">USD 0.24053</option>
-                <option value="mercedes">EUROS 0.21917972</option>
-            </select><ul></ul>
-            <button onclick="downloadPDF('|| Invest Only 10 Ruppes And Earn 730 Instant.pdf ||')">CLICK TO PAY</button>
-          </div>
-        </div>
-      </div>
-       <!-- Product 2 -->
-      <div class="col-md-4">
-        <div class="card">
-          <img src="C:\Users\vedbh\Downloads\4.jpg" class="card-img-top" alt="Product 2">
-          <div class="card-body">
-            <h5 class="card-title">Quiz or Show Ads And Correct Ans Get 100,500,1000 Instant Your UPI</h5>
-            <p class="card-text">Engage, Learn, and Win! Participate in our Quiz or Show Ads challenge for a chance to win instant rewards of 100, 500, or 1000! Simply answer correctly and claim your prize directly to your UPI. Exciting, interactive, and rewarding – your knowledge pays off instantly. Join the fun now!</p>
-            <select id="cars" name="cars" required>
-                <option value="volvo">INR 19.99 Ruppes</option>
-                <option value="saab">USD 0.24053</option>
-                <option value="mercedes">EUROS 0.21917972</option>
-            </select><ul></ul>
-            <button onclick="downloadPDF('|| Quiz or Show Ads And Correct Ans Get 100,500,1000 Instant Your UPI.pdf ||')">CLICK TO PAY</button>
-          </div>
-        </div>
-      </div>
-      <!-- Product 3 -->
-      <div class="col-md-4">
-        <div class="card">
-          <img src="C:\Users\vedbh\Downloads\5.jpg" class="card-img-top" alt="Product 3">
-          <div class="card-body">
-            <h5 class="card-title">Watch Video And Earn Money Instant Withdraw In Your UPI</h5>
-            <p class="card-text">Unlock a world of instant earnings! Watch engaging videos and earn real money with immediate UPI withdrawals. Experience a seamless way to boost your income effortlessly. Don't miss out on this incredible opportunity! Join now and start earning instantly. Fast, reliable, and hassle-free - your financial freedom awaits!</p>
-            <select id="cars" name="cars" required>
-                <option value="volvo">INR 19.99 Ruppes</option>
-                <option value="saab">USD 0.24053</option>
-                <option value="mercedes">EUROS 0.21917972</option>
-            </select><ul></ul>
-            <button onclick="downloadPDF('|| Watch Video And Earn Money Instant Withdraw In Your UPI.pdf ||')">CLICK TO PAY</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="C:\Users\vedbh\Downloads\6.jpg" class="card-img-top" alt="Product 3">
-          <div class="card-body">
-            <h5 class="card-title">Signup Bonus 500 Rupees,900 Ruppes InvestmentThen You Get 2500 Ruppes, instant Withdraw Your UPI</h5>
-            <p class="card-text">Unlock financial gains with a lucrative offer! Sign up today for a generous 500 Rupees bonus. Invest just 900 Rupees and watch your returns soar to 2500 Rupees! Enjoy instant withdrawals to your UPI. Seize this opportunity for quick and easy profits. Don't miss out on financial success!</p>
-            <select id="cars" name="cars" required>
-                <option value="volvo">INR 19.99 Ruppes</option>
-                <option value="saab">USD 0.24053</option>
-                <option value="mercedes">EUROS 0.21917972</option>
-            </select><ul></ul>
-            <button onclick="downloadPDF('|| Signup Bonus 500 Rupees,900 Ruppes InvestmentThen You Get 2500 Ruppes, instant Withdraw Your UPI.pdf ||')">CLICK TO PAY</button>
-          </div>
-        </div>
-      </div>
-
     </div>
-  </div>
-  
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2024 Igtradingmaster</p>
-  </footer>
+</div>
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Bootstrap JS and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script>
-    function downloadPDF(pdfName) {
-    // Simulate download (replace this with actual download logic)
-    alert(`First Payment And Get Your Course ${pdfName}`);
-    
-    // Redirect to the second page (replace 'second_page.html' with the actual page)
-    window.location.href = 'payment.html';
-}
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Custom JavaScript -->
+<script>
+    // Array of Indian male names
+    const indianMaleNames = ['Raj', 'Arun', 'Suresh', 'Manoj', 'Rakesh', 'Vikram', 'Rahul', 'Amit', 'Kiran'];
+
+    // Array of Indian female names
+    const indianFemaleNames = ['Priya', 'Neha', 'Pooja', 'Anita', 'Kavita', 'Divya', 'Anjali', 'Shweta', 'Sunita'];
+
+    // Flag to track if the user can send a message
+    let canSendMessage = false;
+
+    // Function to generate a random Indian employee name
+    function generateIndianEmployeeName() {
+        const gender = Math.random() < 0.5 ? 'male' : 'female';
+        const names = gender === 'male' ? indianMaleNames : indianFemaleNames;
+        const randomIndex = Math.floor(Math.random() * names.length);
+        return names[randomIndex];
+    }
+
+    function handleEmployeeResponse(response) {
+        displayTypingAnimation(); // Show typing animation
+        setTimeout(function() {
+            document.getElementById('support-img').src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIdXtxpWsa_WmQn1iz94zBsJtmZVdVBOFcohHTu59Uw&s"; // Change the image to employee's image
+            const employeeName = generateIndianEmployeeName();
+            displayMessage('employee', response);
+            if (response === "Your error has been noted. A fix will be provided soon. Thank you!") {
+                // Show the full-screen popup modal
+                $('#errorNotedModal').modal('show');
+            }
+        }, 3000); // Display the answer after 3 seconds
+    }
+
+    // Function to reset the chat process
+    function resetChatProcess() {
+        document.getElementById('issue-select').style.display = "block";
+        document.getElementById('send-btn').style.display = "inline-block";
+        document.getElementById('chat-input').remove();
+        document.querySelector('.card-footer button').remove();
+    }
+
+    // Function to display messages in the chat container
+    function displayMessage(sender, message) {
+        const chatContainer = document.getElementById('chat-container');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('mb-2', 'px-3', 'py-2', 'rounded');
+        if (sender === 'user') {
+            messageElement.classList.add('bg-primary', 'text-white', 'float-left');
+            messageElement.innerHTML = `
+                <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="" width="30" class="mr-2">
+                ${message}
+            `;
+        } else if (sender === 'employee') {
+            messageElement.classList.add('bg-secondary', 'text-white', 'float-right');
+            messageElement.innerHTML = `
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIdXtxpWsa_WmQn1iz94zBsJtmZVdVBOFcohHTu59Uw&s" alt="Employee Logo" width="30" class="mr-2">
+                ${message}
+            `;
+        }
+        chatContainer.appendChild(messageElement);
+    }
+
+    // Function to display typing animation
+    function displayTypingAnimation() {
+        const chatContainer = document.getElementById('chat-container');
+        const typingAnimation = document.createElement('div');
+        typingAnimation.classList.add('mb-2', 'px-3', 'py-2', 'rounded');
+        typingAnimation.innerHTML = `
+            <img src="https://t3.ftcdn.net/jpg/05/06/55/22/360_F_506552238_j3Y4oq4rrlLEgzVG30AdEe0TaRINtUKr.jpg" alt="Typing Animation" width="30" class="mr-2">
+            <div class="typing-animation bg-secondary text-white float-right"></div>
+        `;
+        chatContainer.appendChild(typingAnimation);
+    }
+
+    // Simulate checking for employee availability
+    setTimeout(function() {
+        document.getElementById('loader').classList.add('d-none');
+        document.getElementById('green-mark').classList.remove('d-none');
+        document.getElementById('send-btn').removeAttribute('disabled');
+        canSendMessage = true; // Allow user to send messages
+        displayMessage('employee', `Hello dear friend, my name is ${generateIndianEmployeeName()}. How can I help you?`);
+    }, 3000);
+
+    // Function to handle user's selection and display messages
+    document.getElementById('send-btn').addEventListener('click', function() {
+        if (canSendMessage) {
+            const selectedIssue = document.getElementById('issue-select').value;
+            if (selectedIssue !== "") {
+                let response = "";
+                if (selectedIssue === "backup") {
+                    response = "Please use only digits 0-9 digits dont use alphabets. thanks for contact in employe!";
+                } else if (selectedIssue === "password") {
+                    response = "The minimum and maximum password length is 8 digits. Please create an 8-digit password! thanks for contact in employe!";
+                } else if (selectedIssue === "mobile") {
+                    response = "Please enter your 10-digit mobile number without using the country code. thanks for contact in employe!";
+                } else if (selectedIssue === "download") {
+                    response = "You have already downloaded the APK. thanks for contact in employe!";
+                } else if (selectedIssue === "other") {
+                    // Display the chat box for the user to type their error
+                    document.getElementById('issue-select').style.display = "none";
+                    document.getElementById('send-btn').style.display = "none";
+                    const chatInput = document.createElement('textarea');
+                    chatInput.id = "chat-input";
+                    chatInput.classList.add('form-control', 'mt-3');
+                    chatInput.placeholder = "Type your error...";
+                    document.querySelector('.card-footer').appendChild(chatInput);
+                    const sendChatBtn = document.createElement('button');
+                    sendChatBtn.classList.add('btn', 'btn-primary', 'mt-3');
+                    sendChatBtn.textContent = "Send";
+                    document.querySelector('.card-footer').appendChild(sendChatBtn);
+                    sendChatBtn.addEventListener('click', function() {
+                        const userError = document.getElementById('chat-input').value;
+                        if (userError.trim() !== "") {
+                            displayMessage('user', userError);
+                            // Store user's error in localStorage
+                            let storedErrors = JSON.parse(localStorage.getItem('storedErrors')) || [];
+                            storedErrors.push(userError);
+                            localStorage.setItem('storedErrors', JSON.stringify(storedErrors));
+                            handleEmployeeResponse("Your error has been noted. A fix will be provided soon. Thank you!");
+                        }
+                    });
+                    return; // Exit the function early to prevent further execution
+                } else {
+                    response = "An error occurred. Please try again later.";
+                }
+                displayMessage('user', selectedIssue); // Display user's selected issue
+                handleEmployeeResponse(response);
+            }
+        }
+    });
 </script>
+
+<!-- Full-screen popup modal -->
+<div class="modal" id="errorNotedModal" tabindex="-1" role="dialog" aria-labelledby="errorNotedModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorNotedModalLabel">Error Noted</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Your error has been noted. A fix will be provided soon. Thank you!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
