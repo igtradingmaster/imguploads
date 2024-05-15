@@ -2,6 +2,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Remove the unwanted code snippet -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+    <!-- ... -->
+    <!-- end custom head snippets -->
+    <title>Need Help</title>
+    <!-- Link your CSS file -->
+    <link rel="stylesheet" href="/NEED-HELP/assets/css/style.css?v=eeac4e013c39aee2e5eefcc373dde28a9bc4baa2">
+    <!-- Start custom head snippets, customize with your own _includes/head-custom.html file -->
+    <!-- Setup Google Analytics -->
+    <!-- You can set your favicon here -->
+    <!-- end custom head snippets -->
     <title>Chat with Employee</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
