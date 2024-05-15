@@ -2,17 +2,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- Remove the unwanted code snippet -->
-    <!-- Begin Jekyll SEO tag v2.8.0 -->
-    <!-- ... -->
-    <!-- end custom head snippets -->
-   <center> <title>Need Help</title>
-    <!-- Link your CSS file -->
-    <link rel="stylesheet" href="/NEED-HELP/assets/css/style.css?v=eeac4e013c39aee2e5eefcc373dde28a9bc4baa2">
-    <!-- Start custom head snippets, customize with your own _includes/head-custom.html file -->
-    <!-- Setup Google Analytics -->
-    <!-- You can set your favicon here -->
-    <!-- end custom head snippets -->
     <title>Chat with Employee</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -24,8 +13,12 @@
         }
 
         body {
-            background-color: #333;
-        }
+            background-image: url('https://i.pinimg.com/originals/0c/64/9a/0c649a0c7f4c86a71aa4a89341e32881.gif'); /* Replace 'background.jpg' with the path to your image */
+    background-size: cover; /* This ensures that the background image covers the entire body */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    background-position: center; /* Center the background image */
+}
+        
 
         .loader {
             border: 4px solid #333;
@@ -67,6 +60,56 @@
             100% {
                 transform: scale(0.8);
             }
+        }
+        /* Initial styles for the RGB light and card */
+        #support-img {
+            filter: drop-shadow(0 0 0 transparent);
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        /* Blinking effect for the RGB light */
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .blinking {
+            animation: blink 1s infinite;
+        }
+
+        /* Shadow effect for the card */
+        .card-hovered {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+/* Blinking effect for the RGB light */
+@keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .blinking {
+            animation: blink 1s infinite;
+        }
+
+        /* Shadow effect for the send button */
+        #send-btn {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        #send-btn:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Shadow under the light */
+        #support-img {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
         }
     </style>
 
