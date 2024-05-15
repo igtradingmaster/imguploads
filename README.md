@@ -6,7 +6,7 @@
     <!-- Begin Jekyll SEO tag v2.8.0 -->
     <!-- ... -->
     <!-- end custom head snippets -->
-    <title>Need Help</title>
+   <center> <title>Need Help</title>
     <!-- Link your CSS file -->
     <link rel="stylesheet" href="/NEED-HELP/assets/css/style.css?v=eeac4e013c39aee2e5eefcc373dde28a9bc4baa2">
     <!-- Start custom head snippets, customize with your own _includes/head-custom.html file -->
