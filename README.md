@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS -->
     <style>
+        h1 {
+    display: none;
+}
         /* Your custom styles here */
         .loader-container {
             text-align: center;
