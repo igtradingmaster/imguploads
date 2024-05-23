@@ -16,11 +16,8 @@
         }
 
         body {
-            background-image: url('https://i.pinimg.com/originals/0c/64/9a/0c649a0c7f4c86a71aa4a89341e32881.gif'); /* Replace 'background.jpg' with the path to your image */
-    background-size: cover; /* This ensures that the background image covers the entire body */
-    background-repeat: no-repeat; /* Prevent the background image from repeating */
-    background-position: center; /* Center the background image */
-}
+         background-color: #333;
+         }
         
 
         .loader {
