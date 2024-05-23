@@ -251,7 +251,7 @@
                 } else if (selectedIssue === "mobile") {
                     response = "Please enter your 10-digit mobile number without using the country code. thanks for contact in employe!";
                 } else if (selectedIssue === "download") {
-                    response = "You have already downloaded the APK. thanks for contact in employe!";
+                    response = "Please click the DOWNLOAD APK and redirect apk download page. thanks for contact in employe!";
                 } else if (selectedIssue === "other") {
                     // Display the chat box for the user to type their error
                     document.getElementById('issue-select').style.display = "none";
