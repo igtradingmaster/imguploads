@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -243,7 +243,7 @@ h2 {
     <div class="no-copy">
     <h2 class="text-center">Upload an Image</h2>
     <form id="uploadForm" class="mb-4">
-        <a href="index.html" id="exitLogo">
+        <a href="https://igtradingmaster.github.io/Home/" id="exitLogo">
             <img src="https://t3.ftcdn.net/jpg/04/51/52/52/360_F_451525222_IKqxMEeAVBS6Pj5JpJU0MxnQAtasHZPe.jpg" alt="Exit Logo">
           </a>
         <div class="form-group">
