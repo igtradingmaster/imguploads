@@ -1,309 +1,430 @@
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat with Employee</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Custom CSS -->
+    <title>Image Upload with Password Protection</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        h1 {
-    display: none;
+       /* Body and general styles */
+/* Body and general styles */
+.no-copy {
+    -webkit-user-select: none;  /* Safari */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* Internet Explorer/Edge */
+    user-select: none;          /* Standard syntax */
 }
-        /* Your custom styles here */
-        .loader-container {
-            text-align: center;
-        }
+/* General styles */
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #040000;
+    margin: 0;
+    padding: 0;
+}
 
-        body {
-         background-color: #333;
-         }
-        
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
 
-        .loader {
-            border: 4px solid #333;
-            border-radius: 50%;
-            border-top: 4px solid #3498db;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+/* Form styles */
+.form-group {
+    margin-bottom: 20px;
+}
 
-        .loader-container {
-            text-align: center;
-        }
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
-        /* New loader style */
-        .loader {
-            border: 4px solid #333;
-            border-radius: 5px;
-            border-top: 4px solid #3498db;
-            width: 50px;
-            height: 20px;
-            animation: pulse 1s ease-in-out infinite;
-            margin: 0 auto;
-        }
+.btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        @keyframes pulse {
-            0% {
-                transform: scale(0.8);
-            }
-            50% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(0.8);
-            }
-        }
-        /* Initial styles for the RGB light and card */
-        #support-img {
-            filter: drop-shadow(0 0 0 transparent);
-        }
+.btn:hover {
+    background-color: #0056b3;
+}
 
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-        }
+/* Thumbnail styles */
+#thumbnailContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
 
-        /* Blinking effect for the RGB light */
-        @keyframes blink {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
-        }
+.thumbnail-container {
+    position: relative;
+    width: calc(50% - -100px); /* Adjust thumbnail width here */
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #000000; /* Border around thumbnails */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
 
-        .blinking {
-            animation: blink 1s infinite;
-        }
+.thumbnail-container:hover {
+    transform: translateY(-5px); /* Lift thumbnail on hover */
+}
 
-        /* Shadow effect for the card */
-        .card-hovered {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-/* Blinking effect for the RGB light */
-@keyframes blink {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
-        }
+.thumbnail-container img {
+    width: 500%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    object-fit: cover; /* Ensure images fit within their container */
+}
 
-        .blinking {
-            animation: blink 1s infinite;
-        }
+.thumbnail-container img.locked-image {
+    width: 500px; /* Fixed size for locked images */
+    height: 200px; /* Set desired height */
+    object-fit: cover; /* Ensure images fit within their container */
+}
 
-        /* Shadow effect for the send button */
-        #send-btn {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-        }
+.thumbnail-container img:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
+}
 
-        #send-btn:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+.locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-        /* Shadow under the light */
-        #support-img {
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-        }
+.thumbnail-container:hover .locked-overlay {
+    opacity: 1;
+}
+
+.thumbnail-container p {
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Password Popup styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    max-width: 400px;
+    width: 100%;
+}
+
+.popup h4 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #666;
+}
+
+#passwordInput {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+#passwordSubmit {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#passwordSubmit:hover {
+    background-color: #218838;
+}
+
+/* Loader animation */
+#loader {
+    text-align: center;
+    display: none;
+    margin-top: 10px;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#exitLogo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50px; /* Fixed width */
+        height: 50px; /* Fixed height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      #exitLogo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Maintain aspect ratio */
+      }
+      h1{
+      display:none;
+      }
     </style>
-
+</head>
 <body>
 
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <img id="support-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIdXtxpWsa_WmQn1iz94zBsJtmZVdVBOFcohHTu59Uw&s" alt="Customer Support Logo" width="30">
-                    Helping Employee
-                </div>
-                <div class="card-body">
-                    <!-- Chat messages will be displayed here -->
-                    <div id="chat-container"></div>
-                </div>
-                <div class="card-footer">
-                    <div id="loader" class="loader-container">
-                        <div class="loader"></div>
-                        <p>Please wait, checking for employee availability...</p>
-                    </div>
-                    <div id="green-mark" class="d-none green-mark">Employee is available</div>
-                    <div class="input-group mt-3">
-                        <select id="issue-select" class="custom-select">
-                            <option value="" selected>Select Issue...</option>
-                            <option value="mobile">Mobile Number Incorrect</option>
-                            <option value="password">Password Error</option>
-                            <option value="backup">Backup Code Error</option>
-                            <option value="download">Download APK Error</option>
-                            <option value="other">Other Error</option>
-                        </select>
-                        <div class="input-group-append">
-                            <button id="send-btn" class="btn btn-primary" disabled>Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="no-copy">
+    <h2 class="text-center">Upload an Image</h2>
+    <form id="uploadForm" class="mb-4">
+        <a href="index.html" id="exitLogo">
+            <img src="https://t3.ftcdn.net/jpg/04/51/52/52/360_F_451525222_IKqxMEeAVBS6Pj5JpJU0MxnQAtasHZPe.jpg" alt="Exit Logo">
+          </a>
+        <div class="form-group">
+            <input type="file" id="imageInput" class="form-control">
         </div>
+        <div class="form-group">
+            <input type="text" id="imageName" class="form-control" placeholder="Enter image name" required>
+        </div>
+        <div class="form-group">
+            <input type="password" id="imagePassword" class="form-control" placeholder="Create a password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+    <div id="thumbnailContainer" class="text-center"></div>
+</div>
+</div>
+<div id="passwordPopup" class="popup">
+    <h4 class="text-center">Enter Password</h4>
+    <button class="close-btn">&times;</button> <!-- Close button added -->
+    <input type="password" id="passwordInput" class="form-control mb-2">
+    <button id="passwordSubmit" class="btn btn-primary btn-block">Submit</button>
+    <div id="loader" class="text-center mt-2" style="display:none;">
+        <div class="loader"></div>
+        <span>Checking...</span>
     </div>
 </div>
 
-<!-- Bootstrap JS and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Custom JavaScript -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // Array of Indian male names
-    const indianMaleNames = ['Raj', 'Arun', 'Suresh', 'Manoj', 'Rakesh', 'Vikram', 'Rahul', 'Amit', 'Kiran'];
+ $(document).ready(function() {
+    // Load existing images from localStorage on page load
+    loadImages();
 
-    // Array of Indian female names
-    const indianFemaleNames = ['Priya', 'Neha', 'Pooja', 'Anita', 'Kavita', 'Divya', 'Anjali', 'Shweta', 'Sunita'];
-
-    // Flag to track if the user can send a message
-    let canSendMessage = false;
-
-    // Function to generate a random Indian employee name
-    function generateIndianEmployeeName() {
-        const gender = Math.random() < 0.5 ? 'male' : 'female';
-        const names = gender === 'male' ? indianMaleNames : indianFemaleNames;
-        const randomIndex = Math.floor(Math.random() * names.length);
-        return names[randomIndex];
+    // Function to load existing images from localStorage
+    function loadImages() {
+        const images = JSON.parse(localStorage.getItem('userImages')) || [];
+        images.forEach(imageData => {
+            addThumbnail(imageData.id, imageData.name);
+        });
     }
 
-    function handleEmployeeResponse(response) {
-        displayTypingAnimation(); // Show typing animation
-        setTimeout(function() {
-            document.getElementById('support-img').src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIdXtxpWsa_WmQn1iz94zBsJtmZVdVBOFcohHTu59Uw&s"; // Change the image to employee's image
-            const employeeName = generateIndianEmployeeName();
-            displayMessage('employee', response);
-            if (response === "Your error has been noted. A fix will be provided soon. Thank you!") {
-                // Show the full-screen popup modal
-                $('#errorNotedModal').modal('show');
-            }
-        }, 3000); // Display the answer after 3 seconds
-    }
+    // Function to handle form submission and image upload
+    $('#uploadForm').on('submit', function(e) {
+        e.preventDefault();
+        const file = $('#imageInput')[0].files[0];
+        const imageName = $('#imageName').val();
+        const imagePassword = $('#imagePassword').val();
 
-    // Function to reset the chat process
-    function resetChatProcess() {
-        document.getElementById('issue-select').style.display = "block";
-        document.getElementById('send-btn').style.display = "inline-block";
-        document.getElementById('chat-input').remove();
-        document.querySelector('.card-footer button').remove();
-    }
-
-    // Function to display messages in the chat container
-    function displayMessage(sender, message) {
-        const chatContainer = document.getElementById('chat-container');
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('mb-2', 'px-3', 'py-2', 'rounded');
-        if (sender === 'user') {
-            messageElement.classList.add('bg-primary', 'text-white', 'float-left');
-            messageElement.innerHTML = `
-                <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="" width="30" class="mr-2">
-                ${message}
-            `;
-        } else if (sender === 'employee') {
-            messageElement.classList.add('bg-secondary', 'text-white', 'float-right');
-            messageElement.innerHTML = `
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIdXtxpWsa_WmQn1iz94zBsJtmZVdVBOFcohHTu59Uw&s" alt="Employee Logo" width="30" class="mr-2">
-                ${message}
-            `;
-        }
-        chatContainer.appendChild(messageElement);
-    }
-
-    // Function to display typing animation
-    function displayTypingAnimation() {
-        const chatContainer = document.getElementById('chat-container');
-        const typingAnimation = document.createElement('div');
-        typingAnimation.classList.add('mb-2', 'px-3', 'py-2', 'rounded');
-        typingAnimation.innerHTML = `
-            <img src="https://t3.ftcdn.net/jpg/05/06/55/22/360_F_506552238_j3Y4oq4rrlLEgzVG30AdEe0TaRINtUKr.jpg" alt="Typing Animation" width="30" class="mr-2">
-            <div class="typing-animation bg-secondary text-white float-right"></div>
-        `;
-        chatContainer.appendChild(typingAnimation);
-    }
-
-    // Simulate checking for employee availability
-    setTimeout(function() {
-        document.getElementById('loader').classList.add('d-none');
-        document.getElementById('green-mark').classList.remove('d-none');
-        document.getElementById('send-btn').removeAttribute('disabled');
-        canSendMessage = true; // Allow user to send messages
-        displayMessage('employee', `Hello dear friend, my name is ${generateIndianEmployeeName()}. How can I help you?`);
-    }, 3000);
-
-    // Function to handle user's selection and display messages
-    document.getElementById('send-btn').addEventListener('click', function() {
-        if (canSendMessage) {
-            const selectedIssue = document.getElementById('issue-select').value;
-            if (selectedIssue !== "") {
-                let response = "";
-                if (selectedIssue === "backup") {
-                    response = "Please use only digits 0-9 digits dont use alphabets. thanks for contact in employe!";
-                } else if (selectedIssue === "password") {
-                    response = "The minimum and maximum password length is 8 digits. Please create an 8-digit password! thanks for contact in employe!";
-                } else if (selectedIssue === "mobile") {
-                    response = "Please enter your 10-digit mobile number without using the country code. thanks for contact in employe!";
-                } else if (selectedIssue === "download") {
-                    response = "Please click the DOWNLOAD APK and redirect apk download page. thanks for contact in employe!";
-                } else if (selectedIssue === "other") {
-                    // Display the chat box for the user to type their error
-                    document.getElementById('issue-select').style.display = "none";
-                    document.getElementById('send-btn').style.display = "none";
-                    const chatInput = document.createElement('textarea');
-                    chatInput.id = "chat-input";
-                    chatInput.classList.add('form-control', 'mt-3');
-                    chatInput.placeholder = "Type your error...";
-                    document.querySelector('.card-footer').appendChild(chatInput);
-                    const sendChatBtn = document.createElement('button');
-                    sendChatBtn.classList.add('btn', 'btn-primary', 'mt-3');
-                    sendChatBtn.textContent = "Send";
-                    document.querySelector('.card-footer').appendChild(sendChatBtn);
-                    sendChatBtn.addEventListener('click', function() {
-                        const userError = document.getElementById('chat-input').value;
-                        if (userError.trim() !== "") {
-                            displayMessage('user', userError);
-                            // Store user's error in localStorage
-                            let storedErrors = JSON.parse(localStorage.getItem('storedErrors')) || [];
-                            storedErrors.push(userError);
-                            localStorage.setItem('storedErrors', JSON.stringify(storedErrors));
-                            handleEmployeeResponse("Your error has been noted. A fix will be provided soon. Thank you!");
-                        }
-                    });
-                    return; // Exit the function early to prevent further execution
+        // Validate file type
+        if (file && isValidImageFile(file)) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                const imageId = new Date().getTime();
+                // Check if image with the same name already exists
+                if (isImageNameAvailable(imageName)) {
+                    saveImage(imageId, imageName, imagePassword, imageData);
+                    addThumbnail(imageId, imageName); // Add thumbnail to display
+                    $('#uploadForm')[0].reset(); // Reset form fields
                 } else {
-                    response = "An error occurred. Please try again later.";
+                    alert('Image with the same name already exists. Please use a different name.');
                 }
-                displayMessage('user', selectedIssue); // Display user's selected issue
-                handleEmployeeResponse(response);
-            }
+            };
+            reader.readAsDataURL(file); // Read uploaded file as data URL
+        } else {
+            alert('Please select a valid image file (jpg, jpeg, png, gif).');
         }
     });
-</script>
 
-<!-- Full-screen popup modal -->
-<div class="modal" id="errorNotedModal" tabindex="-1" role="dialog" aria-labelledby="errorNotedModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="errorNotedModalLabel">Error Noted</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    // Function to validate file type
+    function isValidImageFile(file) {
+        const acceptedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        return acceptedImageTypes.includes(file.type);
+    }
+
+    // Function to check if image name is available
+    function isImageNameAvailable(name) {
+        const images = JSON.parse(localStorage.getItem('userImages')) || [];
+        return images.every(img => img.name !== name);
+    }
+
+    // Function to save image data to localStorage permanently
+    function saveImage(id, name, password, data) {
+        let images = JSON.parse(localStorage.getItem('userImages')) || [];
+        images.push({
+            id: id,
+            name: name,
+            password: password,
+            data: data
+        });
+        localStorage.setItem('userImages', JSON.stringify(images));
+    }
+
+    // Function to add thumbnail of uploaded image
+    function addThumbnail(id, name) {
+    const thumbnailHtml = `
+        <div class="col-md-4">
+            <div class="thumbnail-container">
+                <img src="locked.png" class="img-thumbnail locked-image" data-id="${id}">
+                <div class="locked-overlay">Locked</div>
+                <p>${name}</p>
             </div>
-            <div class="modal-body">
-                Your error has been noted. A fix will be provided soon. Thank you!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-            </div>
+            <button class="delete-btn btn btn-danger btn-block" data-id="${id}">Delete</button>
         </div>
-    </div>
-</div>
+    `;
+    $('#thumbnailContainer').append(thumbnailHtml); // Append thumbnail HTML
+}
 
+
+    // Event handler for clicking on a thumbnail to open password popup
+    $('#thumbnailContainer').on('click', '.thumbnail-container', function() {
+        const imageId = $(this).find('img').data('id');
+        $('#passwordPopup').data('image-id', imageId).show(); // Show password popup
+    });
+
+    // Event handler for clicking delete button to remove image
+    $('#thumbnailContainer').on('click', '.delete-btn', function(e) {
+        e.stopPropagation(); // Prevent click from bubbling to parent
+        const imageId = $(this).data('id');
+        deleteImage(imageId); // Delete image from localStorage and UI
+    });
+
+    // Event handler for closing the password popup
+    $('#passwordPopup').on('click', '.close-btn', function() {
+        $('#passwordPopup').hide();
+        $('#passwordInput').val(''); // Clear password input
+    });
+
+    // Event handler for submitting password to view image
+    $('#passwordSubmit').on('click', function() {
+        const imageId = $('#passwordPopup').data('image-id');
+        const enteredPassword = $('#passwordInput').val();
+        const images = JSON.parse(localStorage.getItem('userImages')) || [];
+        const imageData = images.find(img => img.id === imageId);
+        $('#loader').show(); // Show loader animation
+        setTimeout(() => {
+            $('#loader').hide(); // Hide loader animation after timeout
+            if (imageData && enteredPassword === imageData.password) {
+                $('#passwordPopup').hide(); // Hide password popup
+                const newWindow = window.open("", "ImageWindow", "width=600,height=400");
+                if (newWindow) {
+                    newWindow.document.write(`<img src="${imageData.data}" style="max-width: 100%; max-height: 100%;">`);
+                    // Check if new window is closed to lock image again
+                    const checkWindowClosed = setInterval(() => {
+                        if (newWindow.closed) {
+                            clearInterval(checkWindowClosed);
+                            lockImage(imageId); // Lock image after window is closed
+                        }
+                    }, 500);
+                } else {
+                    alert('Popup window blocked. Please allow popups for this site.');
+                }
+            } else {
+                alert('Wrong password'); // Show alert for wrong password
+            }
+        }, 5000); // Simulate checking process
+    });
+
+    // Function to lock image and clear password input
+    function lockImage(imageId) {
+        $('#passwordInput').val(''); // Clear password input
+        $('.thumbnail-container img[data-id="' + imageId + '"]').attr('src', 'locked.png'); // Lock image
+        $('.thumbnail-container img[data-id="' + imageId + '"]').siblings('.locked-overlay').show(); // Show locked overlay
+    }
+
+    // Function to delete image from localStorage and UI
+    function deleteImage(imageId) {
+        let images = JSON.parse(localStorage.getItem('userImages')) || [];
+        images = images.filter(img => img.id !== imageId);
+        localStorage.setItem('userImages', JSON.stringify(images));
+        $(`.delete-btn[data-id="${imageId}"]`).parent().remove(); // Remove thumbnail and delete button from UI
+    }
+
+    // Event listener for tracking user activity (closing window, device shutdown)
+    $(window).on('beforeunload', function() {
+        // Do not clear localStorage here to keep data permanent
+    });
+});
+
+   </script>
