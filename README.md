@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Upload with Password Protection</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Image Upload</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-       /* Body and general styles */
+        .no-copy {
+            user-select: none;
+        }
+             /* Body and general styles */
 /* Body and general styles */
 .no-copy {
     -webkit-user-select: none;  /* Safari */
@@ -99,7 +102,7 @@ h2 {
 
 .thumbnail-container img.locked-image {
     width: 500px; /* Fixed size for locked images */
-    height: 200px; /* Set desired height */
+    height: 210px; /* Set desired height */
     object-fit: cover; /* Ensure images fit within their container */
 }
 
@@ -235,17 +238,33 @@ h2 {
       h1{
       display:none;
       }
+      #exitLogo {
+    position: absolute;
+    bottom: 10px;
+    right: 50%;
+    transform: translateX(-50%);
+    text-align: right;
+}
+
+#exitLogo img {
+    width: 50px;
+    height: 50px;
+}
+.container {
+    position: relative; /* Ensures positioning context for absolute positioning */
+    padding-bottom: 60px; /* Adds space at the bottom for the exit logo */
+}
     </style>
 </head>
 <body>
-
- <div class="container mt-5">
+    <div class="container mt-5">
         <div class="no-copy">
-            <h2 class="text-center">Upload an Image</h2>
+            <a href="https://igtradingmaster.github.io/Home/" id="exitLogo" class="d-block text-center mb-3">
+                <img src="https://t3.ftcdn.net/jpg/04/51/52/52/360_F_451525222_IKqxMEeAVBS6Pj5JpJU0MxnQAtasHZPe.jpg" alt="Exit Logo" style="width: 50px; height: 50px;" />
+            </a><ul></ul><br>
+            <center><h2 class="text-center">Upload an Image</h2></center>
             <form id="uploadForm" class="mb-4">
-                <a href="https://igtradingmaster.github.io/Home/" id="exitLogo" class="d-block text-center mb-3">
-                    <img src="https://t3.ftcdn.net/jpg/04/51/52/52/360_F_451525222_IKqxMEeAVBS6Pj5JpJU0MxnQAtasHZPe.jpg" alt="Exit Logo" style="width: 50px; height: 50px;" />
-                </a>
+                <!-- Existing form content -->
                 <div class="form-group">
                     <input type="file" id="imageInput" class="form-control" />
                 </div>
@@ -258,27 +277,29 @@ h2 {
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </form>
             <div id="thumbnailContainer" class="text-center"></div>
+            
+            <!-- Exit Logo section -->
+           
         </div>
     </div>
-
-<div id="passwordPopup" class="popup">
-    <h4 class="text-center">Enter Password</h4>
-    <button class="close-btn">&times;</button> <!-- Close button added -->
-    <input type="password" id="passwordInput" class="form-control mb-2">
-    <button id="passwordSubmit" class="btn btn-primary btn-block">Submit</button>
-    <div id="loader" class="text-center mt-2" style="display:none;">
-        <div class="loader"></div>
-        <span>Checking...</span>
+    
+    <!-- Password Popup -->
+    <div id="passwordPopup" class="popup">
+        <h4 class="text-center">Enter Password</h4>
+        <button class="close-btn">&times;</button> <!-- Close button added -->
+        <input type="password" id="passwordInput" class="form-control mb-2">
+        <button id="passwordSubmit" class="btn btn-primary btn-block">Submit</button>
+        <div id="loader" class="text-center mt-2" style="display:none;">
+            <div class="loader"></div>
+            <span>Checking...</span>
+        </div>
     </div>
-</div>
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
- $(document).ready(function() {
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+       
+        $(document).ready(function() {
     // Load existing images from localStorage on page load
     loadImages();
 
@@ -444,4 +465,5 @@ h2 {
                 reader.readAsDataURL(file);
             }
         });
-   </script>
+    </script>
+</body>
