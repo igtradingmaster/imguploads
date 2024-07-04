@@ -239,27 +239,28 @@ h2 {
 </head>
 <body>
 
-<div class="container mt-5">
-    <div class="no-copy">
-    <h2 class="text-center">Upload an Image</h2>
-    <form id="uploadForm" class="mb-4">
-        <a href="https://igtradingmaster.github.io/Home/" id="exitLogo">
-            <img src="https://t3.ftcdn.net/jpg/04/51/52/52/360_F_451525222_IKqxMEeAVBS6Pj5JpJU0MxnQAtasHZPe.jpg" alt="Exit Logo">
-          </a>
-        <div class="form-group">
-            <input type="file" id="imageInput" class="form-control">
+ <div class="container mt-5">
+        <div class="no-copy">
+            <h2 class="text-center">Upload an Image</h2>
+            <form id="uploadForm" class="mb-4">
+                <a href="https://igtradingmaster.github.io/Home/" id="exitLogo" class="d-block text-center mb-3">
+                    <img src="https://t3.ftcdn.net/jpg/04/51/52/52/360_F_451525222_IKqxMEeAVBS6Pj5JpJU0MxnQAtasHZPe.jpg" alt="Exit Logo" style="width: 50px; height: 50px;" />
+                </a>
+                <div class="form-group">
+                    <input type="file" id="imageInput" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="text" id="imageName" class="form-control" placeholder="Enter image name" required />
+                </div>
+                <div class="form-group">
+                    <input type="password" id="imagePassword" class="form-control" placeholder="Create a password" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+            <div id="thumbnailContainer" class="text-center"></div>
         </div>
-        <div class="form-group">
-            <input type="text" id="imageName" class="form-control" placeholder="Enter image name" required>
-        </div>
-        <div class="form-group">
-            <input type="password" id="imagePassword" class="form-control" placeholder="Create a password" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
-    </form>
-    <div id="thumbnailContainer" class="text-center"></div>
-</div>
-</div>
+    </div>
+
 <div id="passwordPopup" class="popup">
     <h4 class="text-center">Enter Password</h4>
     <button class="close-btn">&times;</button> <!-- Close button added -->
@@ -426,5 +427,21 @@ h2 {
         // Do not clear localStorage here to keep data permanent
     });
 });
+ // JavaScript for form submission and image preview
+        $('#uploadForm').on('submit', function(e) {
+            e.preventDefault();
+            // Handle form submission logic
+        });
 
+        $('#imageInput').on('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const thumbnail = `<img src="${e.target.result}" alt="Image Thumbnail" class="img-thumbnail mt-3" style="max-width: 200px;" />`;
+                    $('#thumbnailContainer').html(thumbnail);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
    </script>
